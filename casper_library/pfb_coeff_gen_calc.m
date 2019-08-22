@@ -48,7 +48,7 @@ if debug,
     coeff_vector = index;
 else
     windowval = transpose(window(WindowType, alltaps));
-    total_coeffs = windowval .* sinc(fwidth * ([0:alltaps-1]/(2^PFBSize)-TotalTaps/2));
+    total_coeffs = fwidth * windowval .* sinc(fwidth * ([0:alltaps-1]/(2^PFBSize)-TotalTaps/2));
     coeff_vector = total_coeffs(index);
 end
 % end
