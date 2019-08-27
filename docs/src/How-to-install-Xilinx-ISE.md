@@ -103,3 +103,48 @@ The tweaks required to get 14.7 working with Ubuntu 16.04 can vary based on spec
       ```
 
       (Some alternative methods for dealing with this can be found on the CASPER mailing list archive)
+      
+      
+      
+## Modifications to be run after installs
+
+
+**ROACH1/2**
+
+Xilinx removed support for several hardware pcores we use for ROACH1/2 from ISE 14. So the current solution is to add the following pcores from the Xilinx 11 install to your `XPS_ROACH_BASE/pcores` folder or to your 14 install directory at `Xilinx/14.7/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcore`.
+
+`OPB pcores <https://www.dropbox.com/s/eq57n5td37yrwma/pcores_for_ise13.zip?dl=1>`__
+
+* bram_if_cntlr_v1_00_a
+* bram_if_cntlr_v1_00_b
+* ipif_common_v1_00_c
+* opb_arbiter_v1_02_e
+* opb_bram_if_cntlr_v1_00_a
+* opb_ipif_v3_00_a
+* opb_opb_lite_v1_00_a
+* opb_v20_v1_10_c
+* proc_common_v1_00_a
+
+**All installs**
+
+The syntax in the Xilinx Perl scripts is not supported under the Ubuntu default shell Dash.
+Change the symbolic link sh -> dash to sh -> bash:
+::
+
+    cd /bin/
+    sudo rm sh
+    sudo ln -s bash sh
+
+
+Point gmake to make by creating the symbolic link gmake -> make:
+::
+
+    cd /usr/bin/
+    sudo ln -s make gmake
+
+
+If you are not getting any blocks in Simulink (Only seen in CentOS)
+change the permissions on /tmp/LibraryBrowser to a+rwx:
+::
+
+    chmod a+rwx /tmp/LibraryBrowser
